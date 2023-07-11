@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <locale.h>
+
+int minSteps(int x, int y) {
+    // Розраховуємо різницю між x та y
+    int diff = y - x;
+
+    // Якщо різниця дорівнює 0 або 1, то потрібно тільки один крок
+    if (diff <= 1)
+        return 1;
+
+    // Ініціалізуємо лічильник кроків
+    int steps = 0;
+
+    // Перший крок завжди дорівнює 1
+    steps++;
+
+    // Знаходимо найбільшу можливу довжину кроку, яка поміститься в різницю
+    int maxStep = 1;
+    while (maxStep * 2 <= diff) {
+        maxStep *= 2;
+    }
+
+    // Додаємо кроки, які дорівнюють половині найбільшої можливої довжини кроку
+    steps += diff / maxStep;
+
+    // Залишкова різниця
+    int remainder = diff % maxStep;
+
+    // Якщо залишкова різниця більша за 0, додаємо ще крок
+    if (remainder > 0)
+        steps++;
+
+    return steps;
+}
+
+int main() {
+    setlocale(LC_ALL, ""); // встановлення локалі
+
+    int x, y;
+    printf("Введiть значення x: ");
+    scanf("%d", &x);
+    printf("Введiть значення y: ");
+    scanf("%d", &y);
+
+    int steps = minSteps(x, y);
+    printf("Мiнiмальна кiлькiсть крокiв: %d\n", steps);
+
+    return 0;
+}
